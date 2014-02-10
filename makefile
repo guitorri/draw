@@ -7,7 +7,9 @@ ifeq ($(OS),Windows_NT)
   CC = g++
   DYN = dll
   LIBS =
-#-fno-leading-underscore
+  # need import library to resolve DLL extern symbol factory (defined on testdcl.cc)
+  # http://stackoverflow.com/questions/17601949/building-a-shared-library-using-gcc-on-linux-and-mingw-on-windows
+  LINKFLAGS = -Wl,--out-implib,libtestdcl.a
 else
   UNAME_S = $(shell uname -s)
 
@@ -35,7 +37,7 @@ default:
 	make testdcl
 
 $(EXE): testdcl.o
-	$(CC) $(CCFLAGS) -o testdcl testdcl.o $(LIBS)
+	$(CC) $(CCFLAGS) -o testdcl testdcl.o $(LIBS) $(LINKFLAGS)
 
 
 # Linux libs targets
@@ -58,14 +60,15 @@ libsquare.dylib:  square.o
 
 # MINGW32 libs targets
 libcircle.dll:  circle.o
-	$(CC) -shared -o libcircle.dll circle.o
+	$(CC) -shared -o libcircle.dll circle.o -L . -ltestdcl
+
 
 libsquare.dll :  square.o
-	$(CC) -shared  -o libsquare.dll square.o
+	$(CC) -shared  -o libsquare.dll square.o -L . -ltestdcl
 
 all: testdcl libcircle.$(DYN) libsquare.$(DYN)
 
 libs: libcircle.$(DYN) libsquare.$(DYN)
 
 clean:
-	rm -f *.so *.o testdcl *.dylib *.dll *.exe
+	rm -f *.so *.o testdcl *.dylib *.dll *.exe *.a
