@@ -14,7 +14,8 @@ The comments on the article are also worth reading.
 * Mac OSX 10.8.5, Apple LLVM version 4.2 (clang-425.0.28)
 * Debian 6.0.7, g++ 4.5.5
 * Windows XP, MingGW 4.8
-  * NOT WORKING!. It complains about unresolved `factory` symbol on the libraries. No compiler/linker option seems to let the external symbol unresolved. Which is defined on the main application, not on the libraries.
+  * ~~NOT WORKING!. It complains about unresolved `factory` symbol on the libraries. No compiler/linker option seems to let the external symbol unresolved. Which is defined on the main application, not on the libraries.~~
+  * Fixed! There is way to [fix undefined reference with _import library_](http://stackoverflow.com/questions/17601949/building-a-shared-library-using-gcc-on-linux-and-mingw-on-windows) with MinGW.
 
 # Compile and run:
 
