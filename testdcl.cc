@@ -42,7 +42,7 @@ int main(int argc, char **argv){
   char *command_str = (char *)"ls *.so";  // command string to get dynamic lib names
 #endif
 #ifdef __MINGW32__
-  char *command_str = (char *)"ls *.dll";  // command string to get dynamic lib names
+  char *command_str = (char *)"dir /B *.dll";  // bare formant (no header or other info)
 #endif
   char in_buf[BUF_SIZE]; // input buffer for lib names
 
