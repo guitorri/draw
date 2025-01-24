@@ -16,7 +16,7 @@ else
 # Linux
   ifeq ($(UNAME_S),Linux)
   CC = g++
-  CCFLAGS = -rdynamic
+  CCFLAGS = -rdynamic -fPIC
   DYN = so
   endif
 
@@ -31,7 +31,7 @@ endif
 #	$(CC) -ggdb -c $<
 
 %.o : %.cc
-	$(CC) -c $< -o $@
+	$(CC) -c $(CCFLAGS) $< -o $@
 
 default:
 	make testdcl
